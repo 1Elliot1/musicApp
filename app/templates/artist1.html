@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+    {% if Artists %}
+        {% set artist = Artists[0] %}
+        <h1>{{ artist['artistName'] }}</h1>
+
+        <b>{{ artist['homeTown'] }}</b>
+        <b><br><br>Events</b>
+        <ul>
+            <li>{{ artist['events'] }}</li>
+        </ul>
+    {% else %}
+        <p>Artist not found.</p>
+    {% endif %}
+{% endblock %}
