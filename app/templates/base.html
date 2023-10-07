@@ -3,7 +3,7 @@
         <title>[CreativeNameTBD]</title>
     </head>
     <body>
-        <div><a href="/index">[CreativeNameTBD]:</a>&emsp;<a href="/artists">Artists</a>&emsp;<a href="addArtist">Create New Artist</a></div>
+        <div><a href="{{ url_for('index') }}">[CreativeNameTBD]:</a>&emsp;<a href="{{ url_for('artists') }}">Artists</a>&emsp;<a href="{{ url_for('addArtist') }}">Create New Artist</a></div>
         {% with messages = get_flashed_messages() %}
         {% if messages %}
         <ul>

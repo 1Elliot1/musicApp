@@ -1,9 +1,8 @@
-from flask import render_template, flash, redirect, request, session
+from flask import render_template, flash, redirect, request, session, url_for
 from app import app, db
 from app.forms import addArtistForm
 from app.models import Artist, Event, Venue, ArtistToEvent
 import csv
-from pandas import *
 
 @app.route('/')
 @app.route('/index')
@@ -12,27 +11,8 @@ def index():
 
 @app.route('/artists')
 def artists():
-    Artists = [
-        {
-            'artistName': 'Rancid',
-            'bio': 'N/A',
-            'homeTown': 'Albany, California',
-            'events': 'Music4Cancer 2023'
-        },
-        {
-            'artistName': 'Descendants',
-            'bio': 'N/A',
-            'homeTown': 'Manhattan Beach, California',
-            'events': 'New Jersey Concert'
-        },
-        {
-            'artistName': 'AntiFlag',
-            'bio': 'N/A',
-            'homeTown': 'Pittsburgh, Pennsylvania',
-            'events': 'California Concert'
-        }
-    ]
-    return render_template('artistList.html', Artists=Artists)
+    artists = Artist.query.all()
+    return render_template('artistList.html', artists=artists)
 
 @app.route('/artist1')
 def artist1():
@@ -44,6 +24,16 @@ def artist1():
         'events': 'Music4Cancer 2023'
     }]
     return render_template('artist1.html', Artists=Artists)
+
+@app.route('/artist/<name>')
+def artist(name):
+    #query the database for first result of passed name
+    artist = Artist.query.filter_by(name=name).first()
+    if artist:
+        return render_template('artist.html', artist=artist)
+    else:
+        flash(f"Error: Artist {name} Not Found")
+        return redirect(url_for('artists'))
 
 @app.route('/addArtist', methods=['GET','POST'])
 def addArtist():
@@ -74,7 +64,7 @@ def reset_db():
     db.session.commit()
 
     #Add all artist data
-    artistData = read_csv('dataFiles/artists.csv')
+    artistData = 'app/dataFiles/artists.csv'
     with open(artistData, 'r') as file:
         reader = csv.reader(file)
         for row in reader:
@@ -82,13 +72,13 @@ def reset_db():
             item = Artist(id=row[0], name=row[1], hometown=row[2], bio=row[3]) 
             db.session.add(item)
     #populate event data
-    eventData = read_csv('dataFiles/events.csv')
+    eventData = 'app/dataFiles/events.csv'
     with open(eventData, 'r') as file:
         reader = csv.reader(file)
         for row in reader:
             item = Event(id=row[0], name=row[1], date=row[2], price=row[3])
             db.session.add(item)
-    venueData = read_csv('dataFiles/venues.csv')
+    venueData = 'app/dataFiles/venues.csv'
     with open(venueData, 'r') as file:
         reader = csv.reader(file)
         for row in reader:
@@ -111,4 +101,4 @@ def reset_db():
     Venue.query.get(1).events.append(Event.query.get(2))
 
     db.session.commit()
-
+    return render_template('index.html')
