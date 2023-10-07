@@ -1,5 +1,32 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>Create New Artist</h1>
-    <p2>Page Under Construction</p2>
+{% if flashMessage %}
+<div class="alert alert-success">
+    {{ flashMessage }}
+</div>
+{% endif %}
+{% if artistData %}
+<h2>Artist Information:</h2>
+<p><strong>Name:</strong> {{ artistData.artistName }}</p>
+<p><strong>Hometown:</strong> {{ artistData.artistHomeTown }}</p>
+<p><strong>Bio:</strong> {{ artistData.artistBio }}</p>
+{% endif %}
+    <h1>Add New Artist:</h1>
+    <form action="{{ url_for('addArtist') }}" methods="POST">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.artistName.label }}<br>
+            {{ form.artistName(size=32) }}
+        </p>
+        <p>
+            {{ form.artistHomeTown.label }}<br>
+            {{ form.artistHomeTown(size=32) }}
+        </p>
+        <p>
+            {{ form.artistBio.label }}<br>
+            {{ form.artistBio(size=100) }}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+
 {% endblock %}
