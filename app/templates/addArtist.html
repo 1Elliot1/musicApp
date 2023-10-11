@@ -1,18 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-{% if flashMessage %}
-<div class="alert alert-success">
-    {{ flashMessage }}
-</div>
-{% endif %}
-{% if artistData %}
-<h2>Artist Information:</h2>
-<p><strong>Name:</strong> {{ artistData.artistName }}</p>
-<p><strong>Hometown:</strong> {{ artistData.artistHomeTown }}</p>
-<p><strong>Bio:</strong> {{ artistData.artistBio }}</p>
-{% endif %}
-    <h1>Add New Artist:</h1>
-    <form action="{{ url_for('addArtist') }}" methods="POST">
+<h1>Add New Artist:</h1>
+    <form action="{{ url_for('addArtist') }}" method="POST">
         {{ form.hidden_tag() }}
         <p>
             {{ form.artistName.label }}<br>
