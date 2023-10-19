@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Add New Event:</h1>
+    <form action="{{ url_for('addEvent') }}" method="POST">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.eventName.label }}<br>
+            {{ form.eventName(size=32) }}
+        </p>
+        <p>
+            <!--- Add Venue choices here -->
+            {{ form.eventVenue.label }}<br>
+            {{ form.eventVenue }}
+        </p>
+        <p>
+            {{  form.eventArtists.label }}<br>
+            {{ form.eventArtists(multiple=True) }}
+        </p>
+
+        <p>
+            {{ form.eventDate.label }}<br>
+            {{ form.eventDate(class='datepicker') }}
+        </p>
+        <p>
+            {{ form.eventPrice.label }}<br>
+            {{ form.eventPrice(size=8)}}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+
+{% endblock %}

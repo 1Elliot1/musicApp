@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Add New Venue:</h1>
+    <form action="{{ url_for('addVenue') }}" method="POST">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.venueName.label }}<br>
+            {{ form.venueName(size=32) }}
+        </p>
+        <p>
+            {{ form.venueLocation.label }}<br>
+            {{ form.venueLocation(size=32) }}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+
+{% endblock %}

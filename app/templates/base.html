@@ -3,7 +3,24 @@
         <title>[CreativeNameTBD]</title>
     </head>
     <body>
-        <div><a href="{{ url_for('index') }}">[CreativeNameTBD]:</a>&emsp;<a href="{{ url_for('artists') }}">Artists</a>&emsp;<a href="{{ url_for('addArtist') }}">Create New Artist</a></div>
+        <div>
+            <a href="{{ url_for('index') }}">[CreativeNameTBD]:</a>
+            &emsp;
+            <a href="{{ url_for('artists') }}">Artists</a>
+            &emsp;
+            <a href="{{ url_for('addArtist') }}">Create New Artist</a>
+            &emsp;
+            <a href="{{ url_for('addVenue') }}">Create New Venue</a>
+            &emsp;
+            <a href="{{ url_for('addEvent') }}">Create New Event</a>
+            &emsp;
+            {% if current_user.is_anonymous %}
+            <a href="{{ url_for('login') }}">Login</a>
+            {% else %}
+            <a href="{{ url_for('logout') }}">Logout</a>
+            {% endif %}
+        </div>
+
         {% with messages = get_flashed_messages() %}
         {% if messages %}
         <ul>

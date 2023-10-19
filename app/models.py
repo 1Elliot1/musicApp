@@ -1,4 +1,25 @@
-from app import db
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin
+from app import db, login
+
+class User(UserMixin, db.Model):
+    __tablename__ = 'user'
+    id = db.Column(db.Integer, primary_key = True)
+    username = db.Column(db.String(32), index = True, unique = True)
+    email = db.Column(db.String(64), index = True, unique = True)
+    passwordHash = db.Column(db.String(128), index = True)
+
+    def __repr__(self):
+        return '<User {}>'.format(self.username)
+    
+    def setPassword(self, password):
+        self.passwordHash = generate_password_hash(password)
+    def checkPassword(self, hash):
+        return check_password_hash(self.passwordHash, hash)
+
+@login.user_loader
+def loadUser(id):
+    return User.query.get(int(id))
 
 class Artist(db.Model):
     __tablename__ = 'artist'
@@ -40,6 +61,13 @@ class ArtistToEvent(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     artistID = db.Column(db.Integer, db.ForeignKey("artist.id"))
     eventID = db.Column(db.Integer, db.ForeignKey("event.id"))
+
+class EventToVenue(db.Model):
+    __tablename__ = 'Event2Venue'
+
+    id =  db.Column(db.Integer, primary_key=True)
+    eventID = db.Column(db.Integer, db.ForeignKey("event.id"))
+    venueID = db.Column(db.Integer, db.ForeignKey("venue.id"))
 
 
 
