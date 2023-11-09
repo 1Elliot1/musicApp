@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <script type="text/javascript">
+            function validateForm(emailForm) {
+                var string =  emailForm.email.value;
+                console.log(string);
+
+                atIndex = string.search("@");
+                periodIndex = string.lastIndexOf(".");
+
+                if ((atIndex != -1) && (periodIndex != -1) && (atIndex < periodIndex)){
+                    alert("Email is Formatted Correctly")
+                    return true;
+                }alert("Bad Email Format")
+                return false;
+            }
+
+        </script>
+    </head>
+<body> 
+    <form action = "" on submit=""
+</body>
+
+</html>

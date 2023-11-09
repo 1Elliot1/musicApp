@@ -1,5 +1,7 @@
 {% extends "base.html" %}
-{% block content %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
 <h1>Add New Venue:</h1>
     <form action="{{ url_for('addVenue') }}" method="POST">
         {{ form.hidden_tag() }}
